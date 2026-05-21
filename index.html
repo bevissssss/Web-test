@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finera — Personal Finance Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+  <!-- ── Info Bar ─────────────────────────────────────────────────────────── -->
+  <div class="info-bar">
+    <span>TCHE321 (2526-2)GD2.02 &nbsp;·&nbsp; Instructor: Nguyen Dinh Dat</span>
+    <span>Group 01</span>
+  </div>
+
+  <!-- ── Topbar ──────────────────────────────────────────────────────────── -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="#dashboard" class="logo">
+        <svg class="logo-svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
+          <rect x="1"  y="15" width="5" height="10" rx="1.5" fill="#4f46e5"/>
+          <rect x="8"  y="9"  width="5" height="16" rx="1.5" fill="#4f46e5"/>
+          <rect x="15" y="3"  width="5" height="22" rx="1.5" fill="#4f46e5" opacity="0.85"/>
+          <rect x="22" y="7"  width="4" height="18" rx="1.5" fill="#8b5cf6" opacity="0.55"/>
+          <polyline points="3.5,15 10.5,9 17.5,3" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+        </svg>
+        FINERA
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <button class="nav-link active" data-section="dashboard">Home</button>
+        <button class="nav-link" data-section="income">Income</button>
+        <button class="nav-link" data-section="expenses">Expenses</button>
+        <button class="nav-link" data-section="cashflow">Cash Flow</button>
+        <button class="nav-link" data-section="simulator">Simulator</button>
+        <button class="nav-link" data-section="allocation">Allocation</button>
+        <button class="nav-link" data-section="settings">Settings</button>
+      </nav>
+      <div class="topbar-actions">
+        <span class="topbar-date" id="topbarDate"></span>
+        <div class="topbar-auth" id="topbarAuth">
+          <div id="googleSignInBtn"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- ── Main ────────────────────────────────────────────────────────── -->
+    <main class="main-content">
+
+      <!-- Dashboard -->
+      <section id="dashboard" class="section">
+
+        <!-- ── Hero ──────────────────────────────────────────────────────── -->
+        <div class="hero">
+          <img src="hero-bg.png" alt="" class="hero-img" />
+          <div class="hero-overlay"></div>
+          <div class="hero-inner">
+            <div class="hero-content">
+              <p class="hero-label">FAST EXECUTION, LOW LATENCY</p>
+              <h1 class="hero-title">
+                New Level<br>
+                <span class="accent">Financial</span> Markets<br>
+                For Your <span class="accent">Wealth</span>
+              </h1>
+              <p class="hero-sub">Manage your daily income and expenses, analyze your monthly cash flow, and simulate long-term investment growth — all from a single personal finance dashboard.</p>
+              <button class="btn-hero" onclick="document.querySelector('#premium-section').scrollIntoView({ behavior: 'smooth' })">Start Now</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Features Bar ──────────────────────────────────────────────── -->
+        <div class="features-bar">
+          <div class="features-inner">
+            <div class="features-grid">
+              <div class="feature-item">
+                <div class="feature-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+                    <path d="M7 9h2l2 4 2-7 2 3h2"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="feature-name">Income &amp; Expense Tracking</div>
+                  <div class="feature-desc">Log every transaction by category</div>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+                    <line x1="6"  y1="20" x2="6"  y2="14"/>
+                    <polyline points="22,6 13,15 9,11 2,18"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="feature-name">Cash Flow Analysis</div>
+                  <div class="feature-desc">Monthly net flow &amp; cumulative balance</div>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="feature-name">Investment Simulator</div>
+                  <div class="feature-desc">Project 30-year portfolio growth</div>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="feature-name">Asset Allocation Advisor</div>
+                  <div class="feature-desc">Rebalance to benchmark standards</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Premium Section ───────────────────────────────────────────── -->
+        <div class="premium-section" id="premium-section">
+          <div class="premium-inner">
+            <div class="premium-visual">
+              <div class="premium-chart-mock">
+                <div class="mock-bar-row">
+                  <span class="mock-bar" style="height:55%"></span>
+                  <span class="mock-bar" style="height:72%"></span>
+                  <span class="mock-bar" style="height:48%"></span>
+                  <span class="mock-bar" style="height:88%"></span>
+                  <span class="mock-bar" style="height:65%"></span>
+                  <span class="mock-bar" style="height:95%"></span>
+                </div>
+                <svg class="mock-line" viewBox="0 0 300 100" preserveAspectRatio="none">
+                  <polyline points="0,70 50,55 100,65 150,30 200,45 250,18 300,25"
+                    fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <polyline points="0,82 50,78 100,84 150,70 200,76 250,62 300,68"
+                    fill="none" stroke="#ff6b35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+                </svg>
+                <div class="mock-dots">
+                  <span class="mock-dot blue" style="color:#10b981">● Income</span>
+                  <span class="mock-dot orange" style="color:#ff6b35">● Expenses</span>
+                </div>
+              </div>
+            </div>
+            <div class="premium-text">
+              <p class="premium-label">FAST EXECUTION, LOW LATENCY</p>
+              <h2 class="premium-heading">Personal Finance Management<br>&amp; Smart Investment Planning</h2>
+              <p class="premium-desc">Finera combines two essential tools: a complete personal finance tracker to control your daily money flow, and a powerful investment suite to build and optimize your long-term portfolio.</p>
+              <div class="premium-features">
+                <div class="pf-item">
+                  <div class="pf-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+                  </div>
+                  <div>
+                    <div class="pf-name">Personal Finance Management</div>
+                    <div class="pf-desc">Track income, expenses &amp; cash flow in real time</div>
+                  </div>
+                </div>
+                <div class="pf-item">
+                  <div class="pf-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+                  </div>
+                  <div>
+                    <div class="pf-name">Investment &amp; Asset Allocation</div>
+                    <div class="pf-desc">Simulate growth &amp; rebalance your portfolio</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Features Intro ───────────────────────────────────────────── -->
+        <div class="feat-intro">
+          <div class="feat-intro-inner">
+            <div class="feat-bento">
+
+              <!-- 1. Income Management -->
+              <div class="feat-card" style="--fi-delay:.05s">
+                <div class="feat-visual fv-bars-wrap">
+                  <div class="fv-bars">
+                    <span class="fv-bar" style="--h:55%;--c:#4f46e5"></span>
+                    <span class="fv-bar" style="--h:80%;--c:#10b981"></span>
+                    <span class="fv-bar" style="--h:45%;--c:#f59e0b"></span>
+                    <span class="fv-bar" style="--h:90%;--c:#8b5cf6"></span>
+                    <span class="fv-bar" style="--h:65%;--c:#ef4444"></span>
+                    <span class="fv-bar" style="--h:72%;--c:#ec4899"></span>
+                  </div>
+                  <div class="fv-bar-labels">
+                    <span>Jan</span><span>Feb</span><span>Mar</span>
+                    <span>Apr</span><span>May</span><span>Jun</span>
+                  </div>
+                </div>
+                <div class="feat-card-name">Income Management</div>
+                <div class="feat-card-desc">Log salary, bonuses, side jobs &amp; more. Filter and analyze by month and category.</div>
+              </div>
+
+              <!-- 2. Expense Tracking -->
+              <div class="feat-card" style="--fi-delay:.10s">
+                <div class="feat-visual">
+                  <div class="fv-donut-wrap">
+                    <svg viewBox="0 0 80 80" class="fv-donut">
+                      <circle cx="40" cy="40" r="28" fill="none" stroke="rgba(0,0,0,0.03)" stroke-width="14"/>
+                      <circle cx="40" cy="40" r="28" fill="none" stroke="#ef4444" stroke-width="14" stroke-dasharray="53 123" stroke-dashoffset="0"   transform="rotate(-90 40 40)"/>
+                      <circle cx="40" cy="40" r="28" fill="none" stroke="#f59e0b" stroke-width="14" stroke-dasharray="35 141" stroke-dashoffset="-53"  transform="rotate(-90 40 40)"/>
+                      <circle cx="40" cy="40" r="28" fill="none" stroke="#38bdf8" stroke-width="14" stroke-dasharray="26 150" stroke-dashoffset="-88"  transform="rotate(-90 40 40)"/>
+                      <circle cx="40" cy="40" r="28" fill="none" stroke="#8b5cf6" stroke-width="14" stroke-dasharray="25 151" stroke-dashoffset="-114" transform="rotate(-90 40 40)"/>
+                      <circle cx="40" cy="40" r="28" fill="none" stroke="#10b981" stroke-width="14" stroke-dasharray="37 139" stroke-dashoffset="-139" transform="rotate(-90 40 40)"/>
+                    </svg>
+                    <div class="fv-legend">
+                      <span><i style="background:#ef4444"></i>Housing</span>
+                      <span><i style="background:#f59e0b"></i>Food</span>
+                      <span><i style="background:#38bdf8"></i>Transport</span>
+                      <span><i style="background:#10b981"></i>Savings</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="feat-card-name">Expense Tracking</div>
+                <div class="feat-card-desc">Categorize every spend. Visual breakdowns show exactly where your money goes each month.</div>
+              </div>
+
+              <!-- 3. Headline — spans 2 rows -->
+              <div class="feat-headline">
+                <p class="feat-hl-label">BUILT TO SIMPLIFY</p>
+                <h2 class="feat-hl-title">A Complete<br>Personal Finance<br><em>Platform</em></h2>
+                <p class="feat-hl-sub">Everything you need to understand, track, and grow your money — all from one dashboard.</p>
+              </div>
+
+              <!-- 4. Cash Flow -->
+              <div class="feat-card" style="--fi-delay:.15s">
+                <div class="feat-visual">
+                  <div class="fv-cashflow">
+                    <span class="fv-cf-bar pos" style="--h:62%; background:#10b981"></span>
+                    <span class="fv-cf-bar pos" style="--h:48%; background:#10b981"></span>
+                    <span class="fv-cf-bar neg" style="--h:30%; background:#ef4444"></span>
+                    <span class="fv-cf-bar pos" style="--h:74%; background:#10b981"></span>
+                    <span class="fv-cf-bar neg" style="--h:22%; background:#ef4444"></span>
+                    <span class="fv-cf-bar pos" style="--h:55%; background:#10b981"></span>
+                  </div>
+                </div>
+                <div class="feat-card-name">Cash Flow</div>
+                <div class="feat-card-desc">Monthly net flow (income − expenses). Pinpoint deficit months and cumulative balance at a glance.</div>
+              </div>
+
+              <!-- 5. Investment Simulator -->
+              <div class="feat-card" style="--fi-delay:.20s">
+                <div class="feat-visual fv-sim-wrap">
+                  <svg viewBox="0 0 160 70" class="fv-sim" preserveAspectRatio="none">
+                    <defs>
+                      <linearGradient id="fg-cap" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#4f46e5" stop-opacity=".4"/>
+                        <stop offset="100%" stop-color="#4f46e5" stop-opacity="0"/>
+                      </linearGradient>
+                      <linearGradient id="fg-gain" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#ff6b35" stop-opacity=".4"/>
+                        <stop offset="100%" stop-color="#ff6b35" stop-opacity="0"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M0,62 C30,60 70,54 110,46 S145,38 160,34 L160,70 L0,70Z" fill="url(#fg-cap)"/>
+                    <path d="M0,62 C30,60 70,54 110,46 S145,38 160,34" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M0,54 C25,48 55,36 90,24 S135,10 160,5 L160,34 C145,38 110,46 70,54 S30,60 0,62Z" fill="url(#fg-gain)"/>
+                    <path d="M0,54 C25,48 55,36 90,24 S135,10 160,5" fill="none" stroke="#ff6b35" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="160" cy="5" r="3.5" fill="#ff6b35"/>
+                  </svg>
+                  <div class="fv-sim-legend">
+                    <span style="color:#ff6b35">● Gains</span>
+                    <span style="color:#4f46e5">● Capital</span>
+                  </div>
+                </div>
+                <div class="feat-card-name">Investment Simulator</div>
+                <div class="feat-card-desc">Compound interest calculator with multi-scenario comparison and stacked area growth charts.</div>
+              </div>
+
+              <!-- 6. Dashboard (wide) -->
+              <div class="feat-card feat-card--wide" style="--fi-delay:.25s">
+                <div class="feat-visual">
+                  <div class="fv-dash-stats">
+                    <div class="fv-ds-item" style="--dc:#10b981"><div class="fv-ds-val">+24.5M ↑</div><div class="fv-ds-lbl">Total Income</div></div>
+                    <div class="fv-ds-item" style="--dc:#ef4444"><div class="fv-ds-val">−16.2M ↓</div><div class="fv-ds-lbl">Total Expenses</div></div>
+                    <div class="fv-ds-item" style="--dc:#00d4aa"><div class="fv-ds-val">+8.3M ↑</div><div class="fv-ds-lbl">Net Cash Flow</div></div>
+                    <div class="fv-ds-item" style="--dc:#4f46e5"><div class="fv-ds-val">33.9%</div><div class="fv-ds-lbl">Savings Rate</div></div>
+                  </div>
+                </div>
+                <div class="feat-card-name">Dashboard</div>
+                <div class="feat-card-desc">Live financial overview — key KPI cards, 6-month income/expense trends, recent transactions table, and live VN100 market data.</div>
+              </div>
+
+              <!-- 7. Asset Allocation Advisor -->
+              <div class="feat-card" style="--fi-delay:.30s">
+                <div class="feat-visual">
+                  <div class="fv-tags">
+                    <span class="fv-tag" style="--tc:#4f46e5">Stocks 50%</span>
+                    <span class="fv-tag" style="--tc:#00d4aa">Savings 10%</span>
+                    <span class="fv-tag" style="--tc:#fbbf24">Gold 10%</span>
+                    <span class="fv-tag" style="--tc:#a855f7">USD 10%</span>
+                  </div>
+                </div>
+                <div class="feat-card-name">Asset Allocation Advisor</div>
+                <div class="feat-card-desc">Compare your portfolio against standard benchmarks. Get instant rebalancing suggestions when any asset deviates from target.</div>
+              </div>
+
+            </div><!-- /.feat-bento -->
+          </div>
+        </div>
+
+        <div class="dashboard-body">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Dashboard</div>
+            <div class="section-subtitle">Your financial overview at a glance</div>
+          </div>
+        </div>
+
+        <div class="stats-grid" id="dashboardStats"></div>
+
+        <div class="db-workspace-grid">
+          <div class="db-left-col">
+            <div class="chart-card mb">
+              <div class="chart-card-header">
+                <div>
+                  <div class="chart-card-title">Income vs Expenses</div>
+                  <div class="chart-card-subtitle">Last 6 months</div>
+                </div>
+              </div>
+              <div class="chart-wrap">
+                <canvas id="dashboardChart"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-grid-2">
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div>
+                    <div class="chart-card-title">Monthly Income</div>
+                    <div class="chart-card-subtitle">Last 6 months</div>
+                  </div>
+                </div>
+                <div class="chart-wrap"><canvas id="dashboardIncomeChart"></canvas></div>
+              </div>
+              <div class="chart-card">
+                <div class="chart-card-header">
+                  <div>
+                    <div class="chart-card-title">Monthly Expenses</div>
+                    <div class="chart-card-subtitle">Last 6 months</div>
+                  </div>
+                </div>
+                <div class="chart-wrap"><canvas id="dashboardExpenseChart"></canvas></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="db-right-col">
+            <!-- VNIndex Top 10 -->
+            <div class="chart-card vn100-section">
+              <div class="chart-card-header">
+                <div>
+                  <div class="chart-card-title">VNIndex Top 10 <span class="vn100-live">● LIVE</span></div>
+                  <div class="chart-card-subtitle" id="vn100Time">Loading market data…</div>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Symbol</th><th class="th-spark">Trend</th><th>Price (VND)</th><th>Change</th><th>Volume</th>
+                    </tr>
+                  </thead>
+                  <tbody id="vn100Body">
+                    <tr><td colspan="5" class="empty-state">Fetching market data…</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        </div><!-- /.dashboard-body -->
+      </section>
+
+      <!-- Income -->
+      <section id="income" class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Income</div>
+            <div class="section-subtitle">Track all income sources</div>
+          </div>
+          <div class="header-actions">
+            <button class="btn-secondary btn-sm" onclick="App.downloadExcelTemplate('income')">↓ Template</button>
+            <button class="btn-secondary btn-sm" onclick="App.triggerExcelImport('income')">↑ Import Excel</button>
+            <input type="file" id="importIncomeFile" accept=".xlsx,.xls" style="display:none">
+            <button class="btn-primary" onclick="App.openModal('income')">+ Add Income</button>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="month-picker-wrap" id="incomePickerWrap">
+            <button class="month-picker-btn" id="incomeMonthBtn" type="button">All Months ▾</button>
+            <div class="month-picker-pop" id="incomeMonthPop" style="display:none">
+              <div class="mp-year-row">
+                <button class="mp-arrow" id="incomeYearPrev" type="button">‹</button>
+                <button class="mp-year-val" id="incomeYearVal" type="button">2026</button>
+                <button class="mp-arrow" id="incomeYearNext" type="button">›</button>
+              </div>
+              <div class="mp-grid-wrap" id="incomeGridWrap"></div>
+              <button class="mp-all-btn" id="incomeMonthAll" type="button">All</button>
+            </div>
+          </div>
+          <select class="filter-select" id="incomeCatFilter"></select>
+        </div>
+
+        <div class="chart-grid-2">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <div class="chart-card-title">Monthly Income</div>
+                <div class="chart-card-subtitle" id="incomeDailySubtitle"></div>
+              </div>
+            </div>
+            <div class="chart-wrap"><canvas id="incomeDailyChart"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div class="chart-card-title">By Category</div>
+            </div>
+            <div class="chart-wrap"><canvas id="incomeCatChart"></canvas></div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="table-card-title">Income Records</div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Date</th><th>Category</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="incomeTxBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Expenses -->
+      <section id="expenses" class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Expenses</div>
+            <div class="section-subtitle">Monitor your spending</div>
+          </div>
+          <div class="header-actions">
+            <button class="btn-secondary btn-sm" onclick="App.downloadExcelTemplate('expense')">↓ Template</button>
+            <button class="btn-secondary btn-sm" onclick="App.triggerExcelImport('expense')">↑ Import Excel</button>
+            <input type="file" id="importExpenseFile" accept=".xlsx,.xls" style="display:none">
+            <button class="btn-primary" onclick="App.openModal('expense')">+ Add Expense</button>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="month-picker-wrap" id="expensePickerWrap">
+            <button class="month-picker-btn" id="expenseMonthBtn" type="button">All Months ▾</button>
+            <div class="month-picker-pop" id="expenseMonthPop" style="display:none">
+              <div class="mp-year-row">
+                <button class="mp-arrow" id="expenseYearPrev" type="button">‹</button>
+                <button class="mp-year-val" id="expenseYearVal" type="button">2026</button>
+                <button class="mp-arrow" id="expenseYearNext" type="button">›</button>
+              </div>
+              <div class="mp-grid-wrap" id="expenseGridWrap"></div>
+              <button class="mp-all-btn" id="expenseMonthAll" type="button">All</button>
+            </div>
+          </div>
+          <select class="filter-select" id="expenseCatFilter"></select>
+        </div>
+
+        <div class="chart-grid-2">
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <div class="chart-card-title">Monthly Expenses</div>
+                <div class="chart-card-subtitle" id="expenseDailySubtitle"></div>
+              </div>
+            </div>
+            <div class="chart-wrap"><canvas id="expenseDailyChart"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div class="chart-card-title">By Category</div>
+            </div>
+            <div class="chart-wrap"><canvas id="expenseCatChart"></canvas></div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <div class="table-card-header">
+            <div class="table-card-title">Expense Records</div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>Date</th><th>Category</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
+              </thead>
+              <tbody id="expenseTxBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Cash Flow -->
+      <section id="cashflow" class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Cash Flow</div>
+            <div class="section-subtitle">Net income after all expenses</div>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="month-picker-wrap" id="cfPickerWrap">
+            <button class="month-picker-btn" id="cfMonthBtn" type="button">All Months ▾</button>
+            <div class="month-picker-pop" id="cfMonthPop" style="display:none">
+              <div class="mp-year-row">
+                <button class="mp-arrow" id="cfYearPrev" type="button">‹</button>
+                <button class="mp-year-val" id="cfYearVal" type="button">2026</button>
+                <button class="mp-arrow" id="cfYearNext" type="button">›</button>
+              </div>
+              <div class="mp-grid-wrap" id="cfGridWrap"></div>
+              <button class="mp-all-btn" id="cfMonthAll" type="button">All</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid" id="cashflowStats" style="grid-template-columns: repeat(3,1fr)"></div>
+
+        <div class="chart-card mb">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">Monthly Net Cash Flow</div>
+              <div class="chart-card-subtitle">Surplus (teal) · Deficit (red)</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="cashflowBarChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">Cumulative Balance</div>
+              <div class="chart-card-subtitle">Running total over last 6 months</div>
+            </div>
+          </div>
+          <div class="chart-wrap"><canvas id="cashflowCumulativeChart"></canvas></div>
+        </div>
+      </section>
+
+      <!-- Simulator -->
+      <section id="simulator" class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Investment Simulator</div>
+            <div class="section-subtitle">Simulate 30-year asset growth across 5 stock positions</div>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="month-picker-wrap" id="simPickerWrap">
+            <button class="month-picker-btn" id="simMonthBtn" type="button">All Months ▾</button>
+            <div class="month-picker-pop" id="simMonthPop" style="display:none">
+              <div class="mp-year-row">
+                <button class="mp-arrow" id="simYearPrev" type="button">‹</button>
+                <button class="mp-year-val" id="simYearVal" type="button">2026</button>
+                <button class="mp-arrow" id="simYearNext" type="button">›</button>
+              </div>
+              <div class="mp-grid-wrap" id="simGridWrap"></div>
+              <button class="mp-all-btn" id="simMonthAll" type="button">All</button>
+            </div>
+          </div>
+          <button class="btn-save-snap" id="simSaveBtn" type="button">Save snapshot</button>
+        </div>
+        <div class="snap-history-row" id="simSnapHistory"></div>
+
+        <div class="sim-layout">
+          <div class="sim-panel">
+            <div class="sim-panel-title">Input Parameters</div>
+
+            <div class="sim-group">
+              <div class="sim-label"><span id="income-label">Avg Net Cash Flow</span></div>
+              <input type="text" class="sim-input sim-input-readonly" id="simNetIncome" readonly />
+            </div>
+
+            <div class="sim-group">
+              <div class="sim-label">
+                <span>Monthly Investment Ratio</span>
+                <span id="simRatioLabel" style="color:var(--orange);font-weight:700">0%</span>
+              </div>
+              <input type="range" class="sim-slider" id="simInvestRatio" min="0" max="50" value="0" step="1" />
+              <div class="sim-slider-ticks"><span>0%</span><span>30%</span><span>50%</span></div>
+            </div>
+
+          </div>
+
+          <div class="sim-milestone-wrap">
+            <div id="simMilestoneCards" class="sim-milestone-grid"></div>
+          </div>
+        </div>
+
+        <div class="sim-stocks-row">
+          <div class="chart-card sim-stock-card">
+            <div class="sim-other-table-hdr">Stock Positions</div>
+            <div class="sim-stock-thead">
+              <span>Ticker</span>
+              <span>Live Price</span>
+              <span>Qty</span>
+              <span>Value</span>
+              <span>Target</span>
+              <span>Actual</span>
+              <span>Growth /yr</span>
+            </div>
+            <div id="simStocksTable"></div>
+          </div>
+          <div class="chart-card sim-donut-card">
+            <div class="sim-stock-right-title">Portfolio Mix</div>
+            <div class="sim-alloc-donut-wrap"><canvas id="simAllocDonut"></canvas></div>
+            <div class="sim-donut-legend" id="simDonutLegend"></div>
+          </div>
+        </div>
+
+        <div class="chart-card sim-other-table-wrap mb">
+          <div class="sim-other-table-hdr">Other Monthly Allocations</div>
+          <div class="sim-other-table-cols" id="simOtherAssets">
+            <div class="sim-other-col">
+              <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#00d4aa"></span>Bank Savings</div>
+              <input type="text" inputmode="numeric" class="sim-input sim-other-amt" id="simSavingsAmt" placeholder="0" />
+              <div class="sim-other-col-rate">
+                <input type="number" class="sim-input sim-rate-inp" id="simSavingsRate" value="7.0" min="0" max="100" step="0.1" />
+                <span class="sim-rate-unit">% /yr</span>
+              </div>
+            </div>
+            <div class="sim-other-col">
+              <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#fbbf24"></span>Gold</div>
+              <input type="text" inputmode="numeric" class="sim-input sim-other-amt" id="simGoldAmt" placeholder="0" />
+              <div class="sim-other-col-rate"><span class="sim-rate-unit">8% /yr</span></div>
+            </div>
+            <div class="sim-other-col">
+              <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#a855f7"></span>USD Reserve</div>
+              <input type="text" inputmode="numeric" class="sim-input sim-other-amt" id="simUsdAmt" placeholder="0" />
+              <div class="sim-other-col-rate"><span class="sim-rate-unit">3% /yr</span></div>
+            </div>
+            <div class="sim-other-col">
+              <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#64748b"></span>Cash</div>
+              <span id="simCashDisplay" class="sim-cash-val">—</span>
+              <div class="sim-other-col-rate"><span class="sim-rate-unit">−3% /yr (inflation)</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-card mb">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">Full Portfolio Growth</div>
+              <div class="chart-card-subtitle">Stacked by asset class — 30 years</div>
+            </div>
+          </div>
+          <div class="chart-wrap" style="height:340px"><canvas id="simGrowthChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">Per-Stock Value at Milestones</div>
+              <div class="chart-card-subtitle">Year 10 · Year 20 · Year 30</div>
+            </div>
+          </div>
+          <div class="chart-wrap" style="height:320px"><canvas id="simStockMilestoneChart"></canvas></div>
+        </div>
+
+
+      </section>
+
+      <!-- Allocation Advisor -->
+      <section id="allocation" class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Asset Allocation Advisor</div>
+            <div class="section-subtitle">Compare your allocation against the standard benchmark</div>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="month-picker-wrap" id="allocPickerWrap">
+            <button class="month-picker-btn" id="allocMonthBtn" type="button">All Months ▾</button>
+            <div class="month-picker-pop" id="allocMonthPop" style="display:none">
+              <div class="mp-year-row">
+                <button class="mp-arrow" id="allocYearPrev" type="button">‹</button>
+                <button class="mp-year-val" id="allocYearVal" type="button">2026</button>
+                <button class="mp-arrow" id="allocYearNext" type="button">›</button>
+              </div>
+              <div class="mp-grid-wrap" id="allocGridWrap"></div>
+              <button class="mp-all-btn" id="allocMonthAll" type="button">All</button>
+            </div>
+          </div>
+          <button class="btn-save-snap" id="allocSaveBtn" type="button">Save snapshot</button>
+        </div>
+        <div class="snap-history-row" id="allocSnapHistory"></div>
+
+        <input type="hidden" id="allocNetIncome" />
+
+        <div class="chart-card alloc-advisor">
+          <div class="alloc-body">
+            <div class="alloc-banner">
+              Monthly Investment Budget:&nbsp;<strong id="allocMonthlyVal">—</strong>
+            </div>
+            <div class="alloc-main">
+              <div class="alloc-left">
+                <div class="alloc-section-label">Standard Benchmark</div>
+                <div class="alloc-std-legend" id="allocStdLegend"></div>
+                <div id="gold-price-box" class="alloc-rate-card">
+                  <span id="gold-price-text">Loading...</span>
+                  <span id="gold-price-time"></span>
+                </div>
+                <div id="exchange-rate-box" class="alloc-rate-card">
+                  <span id="exchange-rate-text">Loading...</span>
+                  <span id="exchange-rate-time"></span>
+                </div>
+              </div>
+              <div class="alloc-mid">
+                <div class="alloc-section-label">
+                  Your Actual Allocation
+                  <span class="alloc-total-badge" id="allocTotalBadge">0%</span>
+                </div>
+                <div class="alloc-inputs" id="allocInputs"></div>
+              </div>
+              <div class="alloc-chart">
+                <div class="alloc-donut-wrap"><canvas id="allocUserDonut"></canvas></div>
+              </div>
+            </div>
+            <div class="alloc-suggestions" id="allocSuggestions"></div>
+            <div class="alloc-compare" id="allocCompare"></div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Settings -->
+      <section id="settings" class="section">
+        <div class="section-header">
+          <div>
+            <div class="section-title">Settings</div>
+            <div class="section-subtitle">Customize your Finera experience</div>
+          </div>
+        </div>
+
+        <div class="settings-grid">
+          <div class="settings-card">
+            <div class="settings-card-title">Preferences</div>
+            <form id="settingsForm">
+              <div class="form-group">
+                <label class="form-label">Currency</label>
+                <div class="currency-search-wrap">
+                  <input type="text" id="currencySearchInput" class="form-input" placeholder="Search currency…" autocomplete="off" />
+                  <div class="currency-dropdown" id="currencyDropdown"></div>
+                  <select id="settingsCurrency" style="display:none">
+                  <option value="$">$ — US Dollar (USD)</option>
+                  <option value="€">€ — Euro (EUR)</option>
+                  <option value="£">£ — British Pound (GBP)</option>
+                  <option value="¥">¥ — Japanese Yen (JPY)</option>
+                  <option value="₫">₫ — Vietnamese Dong (VND)</option>
+                  <option value="₩">₩ — South Korean Won (KRW)</option>
+                  <option value="₹">₹ — Indian Rupee (INR)</option>
+                  <option value="A$">A$ — Australian Dollar (AUD)</option>
+                  <option value="C$">C$ — Canadian Dollar (CAD)</option>
+                  <option value="S$">S$ — Singapore Dollar (SGD)</option>
+                  <option value="฿">฿ — Thai Baht (THB)</option>
+                  <option value="Af">Af — Afghan Afghani (AFN)</option>
+                  <option value="L">L — Albanian Lek (ALL)</option>
+                  <option value="دج">دج — Algerian Dinar (DZD)</option>
+                  <option value="Kz">Kz — Angolan Kwanza (AOA)</option>
+                  <option value="AR$">AR$ — Argentine Peso (ARS)</option>
+                  <option value="₼">₼ — Azerbaijani Manat (AZN)</option>
+                  <option value="BD">BD — Bahraini Dinar (BHD)</option>
+                  <option value="৳">৳ — Bangladeshi Taka (BDT)</option>
+                  <option value="Br">Br — Belarusian Ruble (BYN)</option>
+                  <option value="BZ$">BZ$ — Belize Dollar (BZD)</option>
+                  <option value="Bs.">Bs. — Bolivian Boliviano (BOB)</option>
+                  <option value="KM">KM — Bosnia-Herzegovina Mark (BAM)</option>
+                  <option value="P">P — Botswana Pula (BWP)</option>
+                  <option value="R$">R$ — Brazilian Real (BRL)</option>
+                  <option value="B$">B$ — Brunei Dollar (BND)</option>
+                  <option value="лв">лв — Bulgarian Lev (BGN)</option>
+                  <option value="៛">៛ — Cambodian Riel (KHR)</option>
+                  <option value="CL$">CL$ — Chilean Peso (CLP)</option>
+                  <option value="CN¥">CN¥ — Chinese Yuan (CNY)</option>
+                  <option value="CO$">CO$ — Colombian Peso (COP)</option>
+                  <option value="₡">₡ — Costa Rican Colón (CRC)</option>
+                  <option value="Kč">Kč — Czech Koruna (CZK)</option>
+                  <option value="kr">kr — Danish Krone (DKK)</option>
+                  <option value="RD$">RD$ — Dominican Peso (DOP)</option>
+                  <option value="E£">E£ — Egyptian Pound (EGP)</option>
+                  <option value="ETB">ETB — Ethiopian Birr (ETB)</option>
+                  <option value="FJ$">FJ$ — Fijian Dollar (FJD)</option>
+                  <option value="₾">₾ — Georgian Lari (GEL)</option>
+                  <option value="₵">₵ — Ghanaian Cedi (GHS)</option>
+                  <option value="Q">Q — Guatemalan Quetzal (GTQ)</option>
+                  <option value="HK$">HK$ — Hong Kong Dollar (HKD)</option>
+                  <option value="Ft">Ft — Hungarian Forint (HUF)</option>
+                  <option value="kr">kr — Icelandic Króna (ISK)</option>
+                  <option value="Rp">Rp — Indonesian Rupiah (IDR)</option>
+                  <option value="﷼">﷼ — Iranian Rial (IRR)</option>
+                  <option value="ع.د">ع.د — Iraqi Dinar (IQD)</option>
+                  <option value="₪">₪ — Israeli Shekel (ILS)</option>
+                  <option value="J$">J$ — Jamaican Dollar (JMD)</option>
+                  <option value="JD">JD — Jordanian Dinar (JOD)</option>
+                  <option value="₸">₸ — Kazakhstani Tenge (KZT)</option>
+                  <option value="KSh">KSh — Kenyan Shilling (KES)</option>
+                  <option value="KD">KD — Kuwaiti Dinar (KWD)</option>
+                  <option value="с">с — Kyrgyzstani Som (KGS)</option>
+                  <option value="₭">₭ — Lao Kip (LAK)</option>
+                  <option value="L£">L£ — Lebanese Pound (LBP)</option>
+                  <option value="LD">LD — Libyan Dinar (LYD)</option>
+                  <option value="RM">RM — Malaysian Ringgit (MYR)</option>
+                  <option value="Rs">Rs — Mauritian Rupee (MUR)</option>
+                  <option value="MX$">MX$ — Mexican Peso (MXN)</option>
+                  <option value="₮">₮ — Mongolian Tögrög (MNT)</option>
+                  <option value="MAD">MAD — Moroccan Dirham (MAD)</option>
+                  <option value="K">K — Myanmar Kyat (MMK)</option>
+                  <option value="N$">N$ — Namibian Dollar (NAD)</option>
+                  <option value="Rs">Rs — Nepalese Rupee (NPR)</option>
+                  <option value="NZ$">NZ$ — New Zealand Dollar (NZD)</option>
+                  <option value="₦">₦ — Nigerian Naira (NGN)</option>
+                  <option value="NOK">NOK — Norwegian Krone (NOK)</option>
+                  <option value="OMR">OMR — Omani Rial (OMR)</option>
+                  <option value="Rs">Rs — Pakistani Rupee (PKR)</option>
+                  <option value="₲">₲ — Paraguayan Guaraní (PYG)</option>
+                  <option value="S/">S/ — Peruvian Sol (PEN)</option>
+                  <option value="₱">₱ — Philippine Peso (PHP)</option>
+                  <option value="zł">zł — Polish Złoty (PLN)</option>
+                  <option value="QR">QR — Qatari Riyal (QAR)</option>
+                  <option value="lei">lei — Romanian Leu (RON)</option>
+                  <option value="₽">₽ — Russian Ruble (RUB)</option>
+                  <option value="SR">SR — Saudi Riyal (SAR)</option>
+                  <option value="din">din — Serbian Dinar (RSD)</option>
+                  <option value="R">R — South African Rand (ZAR)</option>
+                  <option value="Rs">Rs — Sri Lankan Rupee (LKR)</option>
+                  <option value="SEK">SEK — Swedish Krona (SEK)</option>
+                  <option value="Fr">Fr — Swiss Franc (CHF)</option>
+                  <option value="NT$">NT$ — New Taiwan Dollar (TWD)</option>
+                  <option value="TSh">TSh — Tanzanian Shilling (TZS)</option>
+                  <option value="TT$">TT$ — Trinidad &amp; Tobago Dollar (TTD)</option>
+                  <option value="DT">DT — Tunisian Dinar (TND)</option>
+                  <option value="₺">₺ — Turkish Lira (TRY)</option>
+                  <option value="₴">₴ — Ukrainian Hryvnia (UAH)</option>
+                  <option value="د.إ">د.إ — UAE Dirham (AED)</option>
+                  <option value="$U">$U — Uruguayan Peso (UYU)</option>
+                  <option value="сўм">сўм — Uzbekistani Sum (UZS)</option>
+                  <option value="Bs.S">Bs.S — Venezuelan Bolívar (VES)</option>
+                  <option value="ZK">ZK — Zambian Kwacha (ZMW)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date Format</label>
+                <select class="form-select" id="settingsDateFormat">
+                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                  <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                </select>
+              </div>
+              <div style="margin-top:20px">
+                <button type="submit" class="btn-primary" style="width:100%">Save Changes</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="settings-card">
+            <div class="settings-card-title">Data Management</div>
+            <div class="data-btns">
+              <button class="btn-secondary" id="exportBtn">⬇ Export Data (JSON)</button>
+              <label class="btn-secondary" style="cursor:pointer">
+                ⬆ Import Data (JSON)
+                <input type="file" id="importFile" accept=".json" style="display:none" />
+              </label>
+            </div>
+            <div class="settings-section-label">Cloud Sync — Google Sheets</div>
+            <div class="data-btns">
+              <button class="btn-secondary" id="syncToSheetBtn">☁ Sync to Cloud</button>
+              <button class="btn-secondary" id="loadFromSheetBtn">⬇ Load from Cloud</button>
+            </div>
+            <div class="danger-divider">Danger Zone — irreversible action.</div>
+            <button class="btn-secondary btn-danger" id="clearBtn">✕ Clear All Data</button>
+          </div>
+
+          <div class="settings-card cat-settings-card">
+            <div class="settings-card-title">Custom Categories</div>
+            <div class="cat-type-tabs" id="catTypeTabs">
+              <button class="cat-tab active" data-type="income">Income</button>
+              <button class="cat-tab" data-type="expense">Expense</button>
+            </div>
+            <div class="custom-cat-add">
+              <input type="text" id="newCatName" class="form-input" placeholder="Category name…" maxlength="30" />
+              <input type="color" id="newCatColor" class="cat-color-input" value="#4f46e5" />
+              <button class="btn-primary" id="addCatBtn">Add</button>
+            </div>
+            <div id="customCatList" class="custom-cat-list"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ── Modal ────────────────────────────────────────────────────────────── -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Add Transaction</div>
+        <button class="modal-close" id="modalClose">✕</button>
+      </div>
+      <form id="txForm">
+        <input type="hidden" id="modalType" />
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-input" id="modalDate" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="modalCategory" required></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Amount</label>
+          <input type="text" inputmode="numeric" class="form-input" id="modalAmount" placeholder="0" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Note <span style="color:var(--muted);font-weight:400;text-transform:none">(optional)</span></label>
+          <input type="text" class="form-input" id="modalNote" placeholder="Brief description" maxlength="100" />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" onclick="App.closeModal()" style="flex:0.6">Cancel</button>
+          <button type="submit" class="btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ── Toast ────────────────────────────────────────────────────────────── -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="data.js"></script>
+  <script src="charts.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
