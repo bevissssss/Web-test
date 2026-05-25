@@ -1899,6 +1899,27 @@ const App = (() => {
       toast(`"${name}" removed`);
     });
 
+    // Settings Tab Switching
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.settings-tab-btn');
+      if (!btn) return;
+      document.querySelectorAll('.settings-tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.settings-content .settings-card').forEach(card => {
+        card.classList.remove('active');
+      });
+      
+      if (tab === 'preferences') {
+        document.getElementById('preferences-pane')?.classList.add('active');
+      } else if (tab === 'data-mgmt') {
+        document.getElementById('data-mgmt-pane')?.classList.add('active');
+      } else if (tab === 'custom-cats') {
+        document.getElementById('custom-cats-pane')?.classList.add('active');
+      }
+    });
+
     window.addEventListener('currencyChanged', () => {
       if (state.section === 'simulator') renderSimulator();
       if (state.section === 'allocation') renderAllocation();

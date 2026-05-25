@@ -10,39 +10,39 @@ const Charts = (() => {
     return new Intl.NumberFormat('vi-VN').format(Math.round(v));
   };
 
-  // Color theme adapted for bright, premium light mode with frosted glass vibe
+  // Color theme adapted for premium dark forest green mode
   const C = {
     orange: '#ff6b35', // vibrant coral
-    blue: '#4f46e5',   // futuristic indigo
-    teal: '#10b981',   // emerald green
+    blue: '#16A34A',   // Primary Green
+    teal: '#22C55E',   // Secondary Green
     red: '#ef4444',    // crimson red
-    purple: '#8b5cf6', // amethyst purple
+    purple: '#86EFAC', // Accent Mint
     yellow: '#f59e0b', // warm gold
-    muted: '#64748b',  // slate grey
-    grid: 'rgba(99, 102, 241, 0.08)', // subtle pastel slate grid line
-    tooltip: '#ffffff', // clean white
-    tooltipBorder: 'rgba(99, 102, 241, 0.15)',
+    muted: '#9CA3AF',  // light grey for dark background
+    grid: 'rgba(134, 239, 172, 0.06)', // subtle pastel mint grid line
+    tooltip: '#102019', // Card Background
+    tooltipBorder: 'rgba(134, 239, 172, 0.25)',
   };
 
   const CAT_COLORS = {
     // Income
-    Salary: '#4f46e5',      // Indigo
+    Salary: '#16A34A',      // Primary Green
     'Pocket Money': '#f59e0b', // Warm Gold
-    Bonus: '#10b981',       // Emerald
-    'Side Job': '#06b6d4',    // Vibrant Cyan
-    Investment: '#8b5cf6',  // Purple
-    Extra: '#ec4899',       // Deep Pink
+    Bonus: '#22C55E',       // Secondary Green
+    'Side Job': '#86EFAC',    // Accent Mint
+    Investment: '#34D399',  // Mint-teal
+    Extra: '#a7f3d0',       // Light Mint
     // Expense
     Food: '#f97316',        // Orange
     Housing: '#ef4444',     // Crimson
     Transport: '#0ea5e9',   // Ocean Blue
     Health: '#a855f7',      // Violet
     Entertainment: '#f43f5e', // Rose
-    Savings: '#10b981',     // Emerald
+    Savings: '#22C55E',     // Secondary Green
     Clothes: '#fb923c',     // Light Orange
     Cosmetic: '#d946ef',    // Magenta
     Education: '#eab308',   // Yellow
-    'Contact Fee': '#64748b', // Slate
+    'Contact Fee': '#9ca3af', // Slate
   };
 
   function setCurrency(s) {
@@ -85,18 +85,18 @@ const Charts = (() => {
       animation: { duration: 700, easing: 'easeInOutQuart' },
       layout: { padding: { left: 10 } },
       plugins: {
-        legend: { labels: { color: '#334155', font: { family: 'Inter', size: 12, weight: '500' }, boxWidth: 12, padding: 16 } },
+        legend: { labels: { color: '#D1D5DB', font: { family: 'Inter', size: 12, weight: '500' }, boxWidth: 12, padding: 16 } },
         tooltip: {
           backgroundColor: C.tooltip,
           borderColor: C.tooltipBorder,
           borderWidth: 1,
-          titleColor: '#0f172a',
-          bodyColor: '#475569',
+          titleColor: '#F3F4F6',
+          bodyColor: '#D1D5DB',
           padding: 12,
           cornerRadius: 10,
           boxPadding: 6,
           usePointStyle: true,
-          shadowColor: 'rgba(15, 23, 42, 0.08)',
+          shadowColor: 'rgba(0, 0, 0, 0.3)',
           shadowBlur: 10,
           callbacks: { label: ctx => ` ${fmtCur(ctx.parsed.y ?? ctx.parsed)}` },
         },
@@ -146,19 +146,19 @@ const Charts = (() => {
     const total = data.reduce((a, b) => a + b, 0);
     const renderData = total > 0 ? data : data.map(() => 1);
     const baseColors = labels.map(l => (colorMap && colorMap[l]) || CAT_COLORS[l] || C.muted);
-    const colors = total > 0 ? baseColors : baseColors.map(() => 'rgba(0,0,0,0.05)');
+    const colors = total > 0 ? baseColors : baseColors.map(() => 'rgba(255,255,255,0.05)');
     make(id, {
       type: 'doughnut',
-      data: { labels, datasets: [{ data: renderData, backgroundColor: colors, borderColor: '#ffffff', borderWidth: 2.5, hoverOffset: total > 0 ? 8 : 0 }] },
+      data: { labels, datasets: [{ data: renderData, backgroundColor: colors, borderColor: '#102019', borderWidth: 2.5, hoverOffset: total > 0 ? 8 : 0 }] },
       options: {
         responsive: true, maintainAspectRatio: false,
         animation: { duration: 700, easing: 'easeInOutQuart' },
         cutout: '70%',
         plugins: {
-          legend: { position: 'right', labels: { color: '#334155', font: { family: 'Inter', size: 12, weight: '500' }, boxWidth: 12, padding: 14 } },
+          legend: { position: 'right', labels: { color: '#D1D5DB', font: { family: 'Inter', size: 12, weight: '500' }, boxWidth: 12, padding: 14 } },
           tooltip: {
             backgroundColor: C.tooltip, borderColor: C.tooltipBorder, borderWidth: 1,
-            titleColor: '#0f172a', bodyColor: '#475569', padding: 12, cornerRadius: 10,
+            titleColor: '#F3F4F6', bodyColor: '#D1D5DB', padding: 12, cornerRadius: 10,
             callbacks: {
               label: ctx => {
                 const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
@@ -175,7 +175,7 @@ const Charts = (() => {
   function simStockDonut(id, labels, data, colors) {
     make(id, {
       type: 'doughnut',
-      data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: '#ffffff', borderWidth: 2.5, hoverOffset: 8 }] },
+      data: { labels, datasets: [{ data, backgroundColor: colors, borderColor: '#102019', borderWidth: 2.5, hoverOffset: 8 }] },
       options: {
         responsive: true, maintainAspectRatio: false,
         animation: { duration: 700, easing: 'easeInOutQuart' },
@@ -184,7 +184,7 @@ const Charts = (() => {
           legend: { display: false },
           tooltip: {
             backgroundColor: C.tooltip, borderColor: C.tooltipBorder, borderWidth: 1,
-            titleColor: '#0f172a', bodyColor: '#475569', padding: 12, cornerRadius: 10,
+            titleColor: '#F3F4F6', bodyColor: '#D1D5DB', padding: 12, cornerRadius: 10,
             callbacks: {
               label: ctx => {
                 const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
@@ -234,14 +234,14 @@ const Charts = (() => {
       label: cat,
       data: days.map(d => (dayMap[d] || []).filter(t => t.category === cat).reduce((s, t) => s + t.amount, 0)),
       backgroundColor: (catColors[cat] || C.muted) + 'dd',
-      borderColor: '#ffffff',
+      borderColor: '#102019',
       borderWidth: 1.5, borderRadius: 4, stack: 'daily',
     }));
 
     const opts = baseOpts();
     opts.plugins.tooltip = {
       backgroundColor: C.tooltip, borderColor: C.tooltipBorder, borderWidth: 1,
-      titleColor: '#0f172a', bodyColor: '#475569', padding: 12, cornerRadius: 10,
+      titleColor: '#F3F4F6', bodyColor: '#D1D5DB', padding: 12, cornerRadius: 10,
       filter: (item) => item.parsed.y !== 0,
       callbacks: {
         label: (ctx) => `  ${ctx.dataset.label}: ${fmtCur(ctx.parsed.y)}`,
@@ -263,7 +263,7 @@ const Charts = (() => {
     opts.plugins.legend = { display: false };
     opts.plugins.tooltip = {
       backgroundColor: C.tooltip, borderColor: color, borderWidth: 1,
-      titleColor: '#0f172a', bodyColor: '#475569', padding: 12, cornerRadius: 10,
+      titleColor: '#F3F4F6', bodyColor: '#D1D5DB', padding: 12, cornerRadius: 10,
       callbacks: {
         label: (ctx) => {
           const txs = perDayTxs[ctx.dataIndex] || [];
@@ -314,7 +314,7 @@ const Charts = (() => {
     opts.scales.y.stacked = true;
     opts.plugins.tooltip = {
       backgroundColor: C.tooltip, borderColor: C.tooltipBorder, borderWidth: 1,
-      titleColor: '#0f172a', bodyColor: '#475569', padding: 12, cornerRadius: 10,
+      titleColor: '#F3F4F6', bodyColor: '#D1D5DB', padding: 12, cornerRadius: 10,
       callbacks: {
         label: ctx => ` ${ctx.dataset.label}: ${fmtCur(ctx.parsed.y)}`,
         footer: items => `Total: ${fmtCur(items.reduce((s, it) => s + it.parsed.y, 0))}`,
@@ -326,7 +326,7 @@ const Charts = (() => {
         labels,
         datasets: [
           { label: 'Gains',      data: gains,       borderColor: C.orange, backgroundColor: grad(ctx, 'rgba(255,107,53,0.30)',   'rgba(255,107,53,0)'),   fill: true, tension: 0.4, pointRadius: 0, borderWidth: 2, stack: 'sim' },
-          { label: 'Capital',    data: contributed, borderColor: '#475569', backgroundColor: grad(ctx, 'rgba(71,85,105,0.20)', 'rgba(71,85,105,0)'), fill: true, tension: 0.4, pointRadius: 0, borderWidth: 2, stack: 'sim' },
+          { label: 'Capital',    data: contributed, borderColor: '#6B7280', backgroundColor: grad(ctx, 'rgba(107,114,128,0.20)', 'rgba(107,114,128,0)'), fill: true, tension: 0.4, pointRadius: 0, borderWidth: 2, stack: 'sim' },
         ],
       },
       options: opts,
@@ -334,19 +334,19 @@ const Charts = (() => {
   }
 
   function simStockMilestone(id, milestoneLabels, stocksData) {
-    const PALETTE = ['#4f46e5', '#10b981', '#ff6b35', '#f59e0b', '#ec4899'];
+    const PALETTE = ['#16A34A', '#22C55E', '#86EFAC', '#10B981', '#34D399'];
     const datasets = stocksData.map((s, i) => ({
       label: s.label,
       data:  s.data,
       backgroundColor: PALETTE[i % PALETTE.length] + 'cc',
-      borderColor:     PALETTE[i % PALETTE.length],
+      borderColor:     '#102019',
       borderWidth: 1, borderRadius: 6, borderSkipped: false,
     }));
     const opts = baseOpts();
     opts.scales.y.ticks.callback = fmtCurShort;
     opts.plugins.tooltip = {
       backgroundColor: C.tooltip, borderColor: C.tooltipBorder, borderWidth: 1,
-      titleColor: '#0f172a', bodyColor: '#475569', padding: 12, cornerRadius: 10,
+      titleColor: '#F3F4F6', bodyColor: '#D1D5DB', padding: 12, cornerRadius: 10,
       callbacks: { label: ctx => ` ${ctx.dataset.label}: ${fmtCur(ctx.parsed.y)}` },
     };
     make(id, { type: 'bar', data: { labels: milestoneLabels, datasets }, options: opts });
@@ -365,7 +365,7 @@ const Charts = (() => {
     opts.plugins.tooltip = {
       mode: 'index',
       backgroundColor: C.tooltip, borderColor: C.tooltipBorder, borderWidth: 1,
-      titleColor: '#0f172a', bodyColor: '#475569', padding: 12, cornerRadius: 10,
+      titleColor: '#F3F4F6', bodyColor: '#D1D5DB', padding: 12, cornerRadius: 10,
       callbacks: {
         label: ctx => ` ${ctx.dataset.label}: ${fmtCurShort(ctx.parsed.y)}`,
       },
