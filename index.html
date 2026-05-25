@@ -1,3 +1,4 @@
+<!--Quốc đẹp trai-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +61,16 @@
 
       <!-- Dashboard -->
       <section id="dashboard" class="section">
+
+        <div class="dashboard-top-header" style="margin-bottom: 28px;">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Dashboard</div>
+              <div class="section-subtitle">Your financial overview at a glance</div>
+            </div>
+          </div>
+          <div class="stats-grid" id="dashboardStats"></div>
+        </div>
 
         <!-- ── Hero ──────────────────────────────────────────────────────── -->
         <div class="hero">
@@ -321,253 +332,261 @@
         </div>
 
         <div class="dashboard-body">
-        <div class="section-header">
-          <div>
-            <div class="section-title">Dashboard</div>
-            <div class="section-subtitle">Your financial overview at a glance</div>
-          </div>
-        </div>
-
-        <div class="stats-grid" id="dashboardStats"></div>
-
-        <div class="db-workspace-grid">
-          <div class="db-left-col">
-            <div class="chart-card mb">
-              <div class="chart-card-header">
-                <div>
-                  <div class="chart-card-title">Income vs Expenses</div>
-                  <div class="chart-card-subtitle">Last 6 months</div>
+          <div class="db-workspace-grid">
+            <div class="db-right-col">
+              <!-- VNIndex Top 10 -->
+              <div class="chart-card vn100-section">
+                <div class="chart-card-header">
+                  <div>
+                    <div class="chart-card-title">VNIndex Top 10 <span class="vn100-live">● LIVE</span></div>
+                    <div class="chart-card-subtitle" id="vn100Time">Loading market data…</div>
+                  </div>
                 </div>
-              </div>
-              <div class="chart-wrap">
-                <canvas id="dashboardChart"></canvas>
+                <div class="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Symbol</th><th class="th-spark">Trend</th><th>Price (VND)</th><th>Change</th><th>Volume</th>
+                      </tr>
+                    </thead>
+                    <tbody id="vn100Body">
+                      <tr><td colspan="5" class="empty-state">Fetching market data…</td></tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
 
-            <div class="chart-grid-2">
-              <div class="chart-card">
+            <div class="db-left-col">
+              <div class="chart-card mb">
                 <div class="chart-card-header">
                   <div>
-                    <div class="chart-card-title">Monthly Income</div>
+                    <div class="chart-card-title">Income vs Expenses</div>
                     <div class="chart-card-subtitle">Last 6 months</div>
                   </div>
                 </div>
-                <div class="chart-wrap"><canvas id="dashboardIncomeChart"></canvas></div>
+                <div class="chart-wrap">
+                  <canvas id="dashboardChart"></canvas>
+                </div>
               </div>
-              <div class="chart-card">
-                <div class="chart-card-header">
-                  <div>
-                    <div class="chart-card-title">Monthly Expenses</div>
-                    <div class="chart-card-subtitle">Last 6 months</div>
+
+              <div class="chart-grid-2">
+                <div class="chart-card">
+                  <div class="chart-card-header">
+                    <div>
+                      <div class="chart-card-title">Monthly Income</div>
+                      <div class="chart-card-subtitle">Last 6 months</div>
+                    </div>
                   </div>
+                  <div class="chart-wrap"><canvas id="dashboardIncomeChart"></canvas></div>
                 </div>
-                <div class="chart-wrap"><canvas id="dashboardExpenseChart"></canvas></div>
+                <div class="chart-card">
+                  <div class="chart-card-header">
+                    <div>
+                      <div class="chart-card-title">Monthly Expenses</div>
+                      <div class="chart-card-subtitle">Last 6 months</div>
+                    </div>
+                  </div>
+                  <div class="chart-wrap"><canvas id="dashboardExpenseChart"></canvas></div>
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="db-right-col">
-            <!-- VNIndex Top 10 -->
-            <div class="chart-card vn100-section">
-              <div class="chart-card-header">
-                <div>
-                  <div class="chart-card-title">VNIndex Top 10 <span class="vn100-live">● LIVE</span></div>
-                  <div class="chart-card-subtitle" id="vn100Time">Loading market data…</div>
-                </div>
-              </div>
-              <div class="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Symbol</th><th class="th-spark">Trend</th><th>Price (VND)</th><th>Change</th><th>Volume</th>
-                    </tr>
-                  </thead>
-                  <tbody id="vn100Body">
-                    <tr><td colspan="5" class="empty-state">Fetching market data…</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-
         </div><!-- /.dashboard-body -->
       </section>
 
       <!-- Income -->
       <section id="income" class="section">
-        <div class="section-header">
-          <div>
-            <div class="section-title">Income</div>
-            <div class="section-subtitle">Track all income sources</div>
-          </div>
-          <div class="header-actions">
-            <button class="btn-secondary btn-sm" onclick="App.downloadExcelTemplate('income')">↓ Template</button>
-            <button class="btn-secondary btn-sm" onclick="App.triggerExcelImport('income')">↑ Import Excel</button>
-            <input type="file" id="importIncomeFile" accept=".xlsx,.xls" style="display:none">
-            <button class="btn-primary" onclick="App.openModal('income')">+ Add Income</button>
-          </div>
-        </div>
-
-        <div class="filter-bar">
-          <div class="month-picker-wrap" id="incomePickerWrap">
-            <button class="month-picker-btn" id="incomeMonthBtn" type="button">All Months ▾</button>
-            <div class="month-picker-pop" id="incomeMonthPop" style="display:none">
-              <div class="mp-year-row">
-                <button class="mp-arrow" id="incomeYearPrev" type="button">‹</button>
-                <button class="mp-year-val" id="incomeYearVal" type="button">2026</button>
-                <button class="mp-arrow" id="incomeYearNext" type="button">›</button>
-              </div>
-              <div class="mp-grid-wrap" id="incomeGridWrap"></div>
-              <button class="mp-all-btn" id="incomeMonthAll" type="button">All</button>
-            </div>
-          </div>
-          <select class="filter-select" id="incomeCatFilter"></select>
-        </div>
-
-        <div class="chart-grid-2">
-          <div class="chart-card">
-            <div class="chart-card-header">
+        <div class="split-layout">
+          <!-- Left Column: Header, Filters, Table -->
+          <div class="split-col-left">
+            <div class="section-header">
               <div>
-                <div class="chart-card-title">Monthly Income</div>
-                <div class="chart-card-subtitle" id="incomeDailySubtitle"></div>
+                <div class="section-title">Income</div>
+                <div class="section-subtitle">Track all income sources</div>
+              </div>
+              <div class="header-actions">
+                <button class="btn-secondary btn-sm" onclick="App.downloadExcelTemplate('income')">↓ Template</button>
+                <button class="btn-secondary btn-sm" onclick="App.triggerExcelImport('income')">↑ Import Excel</button>
+                <input type="file" id="importIncomeFile" accept=".xlsx,.xls" style="display:none">
+                <button class="btn-primary" onclick="App.openModal('income')">+ Add Income</button>
               </div>
             </div>
-            <div class="chart-wrap"><canvas id="incomeDailyChart"></canvas></div>
-          </div>
-          <div class="chart-card">
-            <div class="chart-card-header">
-              <div class="chart-card-title">By Category</div>
+
+            <div class="filter-bar">
+              <div class="month-picker-wrap" id="incomePickerWrap">
+                <button class="month-picker-btn" id="incomeMonthBtn" type="button">All Months ▾</button>
+                <div class="month-picker-pop" id="incomeMonthPop" style="display:none">
+                  <div class="mp-year-row">
+                    <button class="mp-arrow" id="incomeYearPrev" type="button">‹</button>
+                    <button class="mp-year-val" id="incomeYearVal" type="button">2026</button>
+                    <button class="mp-arrow" id="incomeYearNext" type="button">›</button>
+                  </div>
+                  <div class="mp-grid-wrap" id="incomeGridWrap"></div>
+                  <button class="mp-all-btn" id="incomeMonthAll" type="button">All</button>
+                </div>
+              </div>
+              <select class="filter-select" id="incomeCatFilter"></select>
             </div>
-            <div class="chart-wrap"><canvas id="incomeCatChart"></canvas></div>
+
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">Income Records</div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Date</th><th>Category</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
+                  </thead>
+                  <tbody id="incomeTxBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Stacked Charts -->
+          <div class="split-col-right">
+            <div class="chart-card mb">
+              <div class="chart-card-header">
+                <div>
+                  <div class="chart-card-title">Monthly Income</div>
+                  <div class="chart-card-subtitle" id="incomeDailySubtitle"></div>
+                </div>
+              </div>
+              <div class="chart-wrap"><canvas id="incomeDailyChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div class="chart-card-title">By Category</div>
+              </div>
+              <div class="chart-wrap"><canvas id="incomeCatChart"></canvas></div>
+            </div>
           </div>
         </div>
-
-        <div class="table-card">
-          <div class="table-card-header">
-            <div class="table-card-title">Income Records</div>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr><th>Date</th><th>Category</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
-              </thead>
-              <tbody id="incomeTxBody"></tbody>
-            </table>
-          </div>
-        </div>
-
       </section>
 
       <!-- Expenses -->
       <section id="expenses" class="section">
-        <div class="section-header">
-          <div>
-            <div class="section-title">Expenses</div>
-            <div class="section-subtitle">Monitor your spending</div>
-          </div>
-          <div class="header-actions">
-            <button class="btn-secondary btn-sm" onclick="App.downloadExcelTemplate('expense')">↓ Template</button>
-            <button class="btn-secondary btn-sm" onclick="App.triggerExcelImport('expense')">↑ Import Excel</button>
-            <input type="file" id="importExpenseFile" accept=".xlsx,.xls" style="display:none">
-            <button class="btn-primary" onclick="App.openModal('expense')">+ Add Expense</button>
-          </div>
-        </div>
-
-        <div class="filter-bar">
-          <div class="month-picker-wrap" id="expensePickerWrap">
-            <button class="month-picker-btn" id="expenseMonthBtn" type="button">All Months ▾</button>
-            <div class="month-picker-pop" id="expenseMonthPop" style="display:none">
-              <div class="mp-year-row">
-                <button class="mp-arrow" id="expenseYearPrev" type="button">‹</button>
-                <button class="mp-year-val" id="expenseYearVal" type="button">2026</button>
-                <button class="mp-arrow" id="expenseYearNext" type="button">›</button>
+        <div class="split-layout mirrored">
+          <!-- Left Column: Stacked Charts -->
+          <div class="split-col-left">
+            <div class="chart-card mb">
+              <div class="chart-card-header">
+                <div>
+                  <div class="chart-card-title">Monthly Expenses</div>
+                  <div class="chart-card-subtitle" id="expenseDailySubtitle"></div>
+                </div>
               </div>
-              <div class="mp-grid-wrap" id="expenseGridWrap"></div>
-              <button class="mp-all-btn" id="expenseMonthAll" type="button">All</button>
+              <div class="chart-wrap"><canvas id="expenseDailyChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div class="chart-card-title">By Category</div>
+              </div>
+              <div class="chart-wrap"><canvas id="expenseCatChart"></canvas></div>
             </div>
           </div>
-          <select class="filter-select" id="expenseCatFilter"></select>
-        </div>
 
-        <div class="chart-grid-2">
-          <div class="chart-card">
-            <div class="chart-card-header">
+          <!-- Right Column: Header, Filters, Table -->
+          <div class="split-col-right">
+            <div class="section-header">
               <div>
-                <div class="chart-card-title">Monthly Expenses</div>
-                <div class="chart-card-subtitle" id="expenseDailySubtitle"></div>
+                <div class="section-title">Expenses</div>
+                <div class="section-subtitle">Monitor your spending</div>
+              </div>
+              <div class="header-actions">
+                <button class="btn-secondary btn-sm" onclick="App.downloadExcelTemplate('expense')">↓ Template</button>
+                <button class="btn-secondary btn-sm" onclick="App.triggerExcelImport('expense')">↑ Import Excel</button>
+                <input type="file" id="importExpenseFile" accept=".xlsx,.xls" style="display:none">
+                <button class="btn-primary" onclick="App.openModal('expense')">+ Add Expense</button>
               </div>
             </div>
-            <div class="chart-wrap"><canvas id="expenseDailyChart"></canvas></div>
-          </div>
-          <div class="chart-card">
-            <div class="chart-card-header">
-              <div class="chart-card-title">By Category</div>
+
+            <div class="filter-bar">
+              <div class="month-picker-wrap" id="expensePickerWrap">
+                <button class="month-picker-btn" id="expenseMonthBtn" type="button">All Months ▾</button>
+                <div class="month-picker-pop" id="expenseMonthPop" style="display:none">
+                  <div class="mp-year-row">
+                    <button class="mp-arrow" id="expenseYearPrev" type="button">‹</button>
+                    <button class="mp-year-val" id="expenseYearVal" type="button">2026</button>
+                    <button class="mp-arrow" id="expenseYearNext" type="button">›</button>
+                  </div>
+                  <div class="mp-grid-wrap" id="expenseGridWrap"></div>
+                  <button class="mp-all-btn" id="expenseMonthAll" type="button">All</button>
+                </div>
+              </div>
+              <select class="filter-select" id="expenseCatFilter"></select>
             </div>
-            <div class="chart-wrap"><canvas id="expenseCatChart"></canvas></div>
+
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">Expense Records</div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Date</th><th>Category</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
+                  </thead>
+                  <tbody id="expenseTxBody"></tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="table-card">
-          <div class="table-card-header">
-            <div class="table-card-title">Expense Records</div>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr><th>Date</th><th>Category</th><th>Amount</th><th>Note</th><th>Actions</th></tr>
-              </thead>
-              <tbody id="expenseTxBody"></tbody>
-            </table>
-          </div>
-        </div>
-
       </section>
 
       <!-- Cash Flow -->
       <section id="cashflow" class="section">
-        <div class="section-header">
-          <div>
-            <div class="section-title">Cash Flow</div>
-            <div class="section-subtitle">Net income after all expenses</div>
-          </div>
-        </div>
-
-        <div class="filter-bar">
-          <div class="month-picker-wrap" id="cfPickerWrap">
-            <button class="month-picker-btn" id="cfMonthBtn" type="button">All Months ▾</button>
-            <div class="month-picker-pop" id="cfMonthPop" style="display:none">
-              <div class="mp-year-row">
-                <button class="mp-arrow" id="cfYearPrev" type="button">‹</button>
-                <button class="mp-year-val" id="cfYearVal" type="button">2026</button>
-                <button class="mp-arrow" id="cfYearNext" type="button">›</button>
+        <div class="split-layout cashflow-split">
+          <!-- Left Column: Header, Filters, Vertical Stats Cards -->
+          <div class="split-col-left">
+            <div class="section-header">
+              <div>
+                <div class="section-title">Cash Flow</div>
+                <div class="section-subtitle">Net income after all expenses</div>
               </div>
-              <div class="mp-grid-wrap" id="cfGridWrap"></div>
-              <button class="mp-all-btn" id="cfMonthAll" type="button">All</button>
+            </div>
+
+            <div class="filter-bar">
+              <div class="month-picker-wrap" id="cfPickerWrap">
+                <button class="month-picker-btn" id="cfMonthBtn" type="button">All Months ▾</button>
+                <div class="month-picker-pop" id="cfMonthPop" style="display:none">
+                  <div class="mp-year-row">
+                    <button class="mp-arrow" id="cfYearPrev" type="button">‹</button>
+                    <button class="mp-year-val" id="cfYearVal" type="button">2026</button>
+                    <button class="mp-arrow" id="cfYearNext" type="button">›</button>
+                  </div>
+                  <div class="mp-grid-wrap" id="cfGridWrap"></div>
+                  <button class="mp-all-btn" id="cfMonthAll" type="button">All</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="stats-grid stacked" id="cashflowStats"></div>
+          </div>
+
+          <!-- Right Column: Stacked Charts -->
+          <div class="split-col-right">
+            <div class="chart-card mb">
+              <div class="chart-card-header">
+                <div>
+                  <div class="chart-card-title">Monthly Net Cash Flow</div>
+                  <div class="chart-card-subtitle">Surplus (teal) · Deficit (red)</div>
+                </div>
+              </div>
+              <div class="chart-wrap"><canvas id="cashflowBarChart"></canvas></div>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <div class="chart-card-title">Cumulative Balance</div>
+                  <div class="chart-card-subtitle">Running total over last 6 months</div>
+                </div>
+              </div>
+              <div class="chart-wrap"><canvas id="cashflowCumulativeChart"></canvas></div>
             </div>
           </div>
-        </div>
-
-        <div class="stats-grid" id="cashflowStats" style="grid-template-columns: repeat(3,1fr)"></div>
-
-        <div class="chart-card mb">
-          <div class="chart-card-header">
-            <div>
-              <div class="chart-card-title">Monthly Net Cash Flow</div>
-              <div class="chart-card-subtitle">Surplus (teal) · Deficit (red)</div>
-            </div>
-          </div>
-          <div class="chart-wrap"><canvas id="cashflowBarChart"></canvas></div>
-        </div>
-
-        <div class="chart-card">
-          <div class="chart-card-header">
-            <div>
-              <div class="chart-card-title">Cumulative Balance</div>
-              <div class="chart-card-subtitle">Running total over last 6 months</div>
-            </div>
-          </div>
-          <div class="chart-wrap"><canvas id="cashflowCumulativeChart"></canvas></div>
         </div>
       </section>
 
@@ -597,102 +616,111 @@
         </div>
         <div class="snap-history-row" id="simSnapHistory"></div>
 
-        <div class="sim-layout">
-          <div class="sim-panel">
-            <div class="sim-panel-title">Input Parameters</div>
+        <div class="split-layout sim-split">
+          <!-- Left Control Panel (35% width) -->
+          <div class="split-col-left">
+            <div class="sim-panel" style="margin-bottom: 24px;">
+              <div class="sim-panel-title">Input Parameters</div>
 
-            <div class="sim-group">
-              <div class="sim-label"><span id="income-label">Avg Net Cash Flow</span></div>
-              <input type="text" class="sim-input sim-input-readonly" id="simNetIncome" readonly />
-            </div>
-
-            <div class="sim-group">
-              <div class="sim-label">
-                <span>Monthly Investment Ratio</span>
-                <span id="simRatioLabel" style="color:var(--orange);font-weight:700">0%</span>
+              <div class="sim-group">
+                <div class="sim-label"><span id="income-label">Avg Net Cash Flow</span></div>
+                <input type="text" class="sim-input sim-input-readonly" id="simNetIncome" readonly />
               </div>
-              <input type="range" class="sim-slider" id="simInvestRatio" min="0" max="50" value="0" step="1" />
-              <div class="sim-slider-ticks"><span>0%</span><span>30%</span><span>50%</span></div>
-            </div>
 
-          </div>
-
-          <div class="sim-milestone-wrap">
-            <div id="simMilestoneCards" class="sim-milestone-grid"></div>
-          </div>
-        </div>
-
-        <div class="sim-stocks-row">
-          <div class="chart-card sim-stock-card">
-            <div class="sim-other-table-hdr">Stock Positions</div>
-            <div class="sim-stock-thead">
-              <span>Ticker</span>
-              <span>Live Price</span>
-              <span>Qty</span>
-              <span>Value</span>
-              <span>Target</span>
-              <span>Actual</span>
-              <span>Growth /yr</span>
-            </div>
-            <div id="simStocksTable"></div>
-          </div>
-          <div class="chart-card sim-donut-card">
-            <div class="sim-stock-right-title">Portfolio Mix</div>
-            <div class="sim-alloc-donut-wrap"><canvas id="simAllocDonut"></canvas></div>
-            <div class="sim-donut-legend" id="simDonutLegend"></div>
-          </div>
-        </div>
-
-        <div class="chart-card sim-other-table-wrap mb">
-          <div class="sim-other-table-hdr">Other Monthly Allocations</div>
-          <div class="sim-other-table-cols" id="simOtherAssets">
-            <div class="sim-other-col">
-              <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#00d4aa"></span>Bank Savings</div>
-              <input type="text" inputmode="numeric" class="sim-input sim-other-amt" id="simSavingsAmt" placeholder="0" />
-              <div class="sim-other-col-rate">
-                <input type="number" class="sim-input sim-rate-inp" id="simSavingsRate" value="7.0" min="0" max="100" step="0.1" />
-                <span class="sim-rate-unit">% /yr</span>
+              <div class="sim-group">
+                <div class="sim-label">
+                  <span>Monthly Investment Ratio</span>
+                  <span id="simRatioLabel" style="color:var(--orange);font-weight:700">0%</span>
+                </div>
+                <input type="range" class="sim-slider" id="simInvestRatio" min="0" max="50" value="0" step="1" />
+                <div class="sim-slider-ticks"><span>0%</span><span>30%</span><span>50%</span></div>
               </div>
             </div>
-            <div class="sim-other-col">
-              <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#fbbf24"></span>Gold</div>
-              <input type="text" inputmode="numeric" class="sim-input sim-other-amt" id="simGoldAmt" placeholder="0" />
-              <div class="sim-other-col-rate"><span class="sim-rate-unit">8% /yr</span></div>
+
+            <!-- Other Monthly Allocations -->
+            <div class="chart-card sim-other-table-wrap" style="margin-bottom: 0;">
+              <div class="sim-other-table-hdr">Other Monthly Allocations</div>
+              <div class="sim-other-table-cols vertical-stack" id="simOtherAssets">
+                <div class="sim-other-col">
+                  <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#00d4aa"></span>Bank Savings</div>
+                  <input type="text" inputmode="numeric" class="sim-input sim-other-amt" id="simSavingsAmt" placeholder="0" />
+                  <div class="sim-other-col-rate">
+                    <input type="number" class="sim-input sim-rate-inp" id="simSavingsRate" value="7.0" min="0" max="100" step="0.1" />
+                    <span class="sim-rate-unit">% /yr</span>
+                  </div>
+                </div>
+                <div class="sim-other-col">
+                  <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#fbbf24"></span>Gold</div>
+                  <input type="text" inputmode="numeric" class="sim-input sim-other-amt" id="simGoldAmt" placeholder="0" />
+                  <div class="sim-other-col-rate"><span class="sim-rate-unit">8% /yr</span></div>
+                </div>
+                <div class="sim-other-col">
+                  <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#a855f7"></span>USD Reserve</div>
+                  <input type="text" inputmode="numeric" class="sim-input sim-other-amt" id="simUsdAmt" placeholder="0" />
+                  <div class="sim-other-col-rate"><span class="sim-rate-unit">3% /yr</span></div>
+                </div>
+                <div class="sim-other-col">
+                  <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#64748b"></span>Cash</div>
+                  <span id="simCashDisplay" class="sim-cash-val">—</span>
+                  <div class="sim-other-col-rate"><span class="sim-rate-unit">−3% /yr (inflation)</span></div>
+                </div>
+              </div>
             </div>
-            <div class="sim-other-col">
-              <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#a855f7"></span>USD Reserve</div>
-              <input type="text" inputmode="numeric" class="sim-input sim-other-amt" id="simUsdAmt" placeholder="0" />
-              <div class="sim-other-col-rate"><span class="sim-rate-unit">3% /yr</span></div>
+          </div>
+
+          <!-- Right Main Panel (65% width) -->
+          <div class="split-col-right">
+            <!-- Milestone Cards -->
+            <div class="sim-milestone-wrap" style="margin-bottom: 24px;">
+              <div id="simMilestoneCards" class="sim-milestone-grid"></div>
             </div>
-            <div class="sim-other-col">
-              <div class="sim-other-col-hd"><span class="alloc-dot" style="background:#64748b"></span>Cash</div>
-              <span id="simCashDisplay" class="sim-cash-val">—</span>
-              <div class="sim-other-col-rate"><span class="sim-rate-unit">−3% /yr (inflation)</span></div>
+
+            <!-- Stocks and Portfolio Mix -->
+            <div class="sim-stocks-row" style="margin-bottom: 24px;">
+              <div class="chart-card sim-stock-card" style="margin-bottom: 0;">
+                <div class="sim-other-table-hdr">Stock Positions</div>
+                <div class="table-wrap">
+                  <div class="sim-stock-thead">
+                    <span>Ticker</span>
+                    <span>Live Price</span>
+                    <span>Qty</span>
+                    <span>Value</span>
+                    <span>Target</span>
+                    <span>Actual</span>
+                    <span>Growth /yr</span>
+                  </div>
+                  <div id="simStocksTable"></div>
+                </div>
+              </div>
+              <div class="chart-card sim-donut-card" style="margin-bottom: 0;">
+                <div class="sim-stock-right-title">Portfolio Mix</div>
+                <div class="sim-alloc-donut-wrap"><canvas id="simAllocDonut"></canvas></div>
+                <div class="sim-donut-legend" id="simDonutLegend"></div>
+              </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="chart-card mb">
+              <div class="chart-card-header">
+                <div>
+                  <div class="chart-card-title">Full Portfolio Growth</div>
+                  <div class="chart-card-subtitle">Stacked by asset class — 30 years</div>
+                </div>
+              </div>
+              <div class="chart-wrap" style="height:340px"><canvas id="simGrowthChart"></canvas></div>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <div class="chart-card-title">Per-Stock Value at Milestones</div>
+                  <div class="chart-card-subtitle">Year 10 · Year 20 · Year 30</div>
+                </div>
+              </div>
+              <div class="chart-wrap" style="height:320px"><canvas id="simStockMilestoneChart"></canvas></div>
             </div>
           </div>
         </div>
-
-        <div class="chart-card mb">
-          <div class="chart-card-header">
-            <div>
-              <div class="chart-card-title">Full Portfolio Growth</div>
-              <div class="chart-card-subtitle">Stacked by asset class — 30 years</div>
-            </div>
-          </div>
-          <div class="chart-wrap" style="height:340px"><canvas id="simGrowthChart"></canvas></div>
-        </div>
-
-        <div class="chart-card">
-          <div class="chart-card-header">
-            <div>
-              <div class="chart-card-title">Per-Stock Value at Milestones</div>
-              <div class="chart-card-subtitle">Year 10 · Year 20 · Year 30</div>
-            </div>
-          </div>
-          <div class="chart-wrap" style="height:320px"><canvas id="simStockMilestoneChart"></canvas></div>
-        </div>
-
-
       </section>
 
       <!-- Allocation Advisor -->
@@ -729,6 +757,13 @@
               Monthly Investment Budget:&nbsp;<strong id="allocMonthlyVal">—</strong>
             </div>
             <div class="alloc-main">
+              <div class="alloc-mid">
+                <div class="alloc-section-label">
+                  Your Actual Allocation
+                  <span class="alloc-total-badge" id="allocTotalBadge">0%</span>
+                </div>
+                <div class="alloc-inputs" id="allocInputs"></div>
+              </div>
               <div class="alloc-left">
                 <div class="alloc-section-label">Standard Benchmark</div>
                 <div class="alloc-std-legend" id="allocStdLegend"></div>
@@ -740,13 +775,6 @@
                   <span id="exchange-rate-text">Loading...</span>
                   <span id="exchange-rate-time"></span>
                 </div>
-              </div>
-              <div class="alloc-mid">
-                <div class="alloc-section-label">
-                  Your Actual Allocation
-                  <span class="alloc-total-badge" id="allocTotalBadge">0%</span>
-                </div>
-                <div class="alloc-inputs" id="allocInputs"></div>
               </div>
               <div class="alloc-chart">
                 <div class="alloc-donut-wrap"><canvas id="allocUserDonut"></canvas></div>
@@ -768,156 +796,175 @@
           </div>
         </div>
 
-        <div class="settings-grid">
-          <div class="settings-card">
-            <div class="settings-card-title">Preferences</div>
-            <form id="settingsForm">
-              <div class="form-group">
-                <label class="form-label">Currency</label>
-                <div class="currency-search-wrap">
-                  <input type="text" id="currencySearchInput" class="form-input" placeholder="Search currency…" autocomplete="off" />
-                  <div class="currency-dropdown" id="currencyDropdown"></div>
-                  <select id="settingsCurrency" style="display:none">
-                  <option value="$">$ — US Dollar (USD)</option>
-                  <option value="€">€ — Euro (EUR)</option>
-                  <option value="£">£ — British Pound (GBP)</option>
-                  <option value="¥">¥ — Japanese Yen (JPY)</option>
-                  <option value="₫">₫ — Vietnamese Dong (VND)</option>
-                  <option value="₩">₩ — South Korean Won (KRW)</option>
-                  <option value="₹">₹ — Indian Rupee (INR)</option>
-                  <option value="A$">A$ — Australian Dollar (AUD)</option>
-                  <option value="C$">C$ — Canadian Dollar (CAD)</option>
-                  <option value="S$">S$ — Singapore Dollar (SGD)</option>
-                  <option value="฿">฿ — Thai Baht (THB)</option>
-                  <option value="Af">Af — Afghan Afghani (AFN)</option>
-                  <option value="L">L — Albanian Lek (ALL)</option>
-                  <option value="دج">دج — Algerian Dinar (DZD)</option>
-                  <option value="Kz">Kz — Angolan Kwanza (AOA)</option>
-                  <option value="AR$">AR$ — Argentine Peso (ARS)</option>
-                  <option value="₼">₼ — Azerbaijani Manat (AZN)</option>
-                  <option value="BD">BD — Bahraini Dinar (BHD)</option>
-                  <option value="৳">৳ — Bangladeshi Taka (BDT)</option>
-                  <option value="Br">Br — Belarusian Ruble (BYN)</option>
-                  <option value="BZ$">BZ$ — Belize Dollar (BZD)</option>
-                  <option value="Bs.">Bs. — Bolivian Boliviano (BOB)</option>
-                  <option value="KM">KM — Bosnia-Herzegovina Mark (BAM)</option>
-                  <option value="P">P — Botswana Pula (BWP)</option>
-                  <option value="R$">R$ — Brazilian Real (BRL)</option>
-                  <option value="B$">B$ — Brunei Dollar (BND)</option>
-                  <option value="лв">лв — Bulgarian Lev (BGN)</option>
-                  <option value="៛">៛ — Cambodian Riel (KHR)</option>
-                  <option value="CL$">CL$ — Chilean Peso (CLP)</option>
-                  <option value="CN¥">CN¥ — Chinese Yuan (CNY)</option>
-                  <option value="CO$">CO$ — Colombian Peso (COP)</option>
-                  <option value="₡">₡ — Costa Rican Colón (CRC)</option>
-                  <option value="Kč">Kč — Czech Koruna (CZK)</option>
-                  <option value="kr">kr — Danish Krone (DKK)</option>
-                  <option value="RD$">RD$ — Dominican Peso (DOP)</option>
-                  <option value="E£">E£ — Egyptian Pound (EGP)</option>
-                  <option value="ETB">ETB — Ethiopian Birr (ETB)</option>
-                  <option value="FJ$">FJ$ — Fijian Dollar (FJD)</option>
-                  <option value="₾">₾ — Georgian Lari (GEL)</option>
-                  <option value="₵">₵ — Ghanaian Cedi (GHS)</option>
-                  <option value="Q">Q — Guatemalan Quetzal (GTQ)</option>
-                  <option value="HK$">HK$ — Hong Kong Dollar (HKD)</option>
-                  <option value="Ft">Ft — Hungarian Forint (HUF)</option>
-                  <option value="kr">kr — Icelandic Króna (ISK)</option>
-                  <option value="Rp">Rp — Indonesian Rupiah (IDR)</option>
-                  <option value="﷼">﷼ — Iranian Rial (IRR)</option>
-                  <option value="ع.د">ع.د — Iraqi Dinar (IQD)</option>
-                  <option value="₪">₪ — Israeli Shekel (ILS)</option>
-                  <option value="J$">J$ — Jamaican Dollar (JMD)</option>
-                  <option value="JD">JD — Jordanian Dinar (JOD)</option>
-                  <option value="₸">₸ — Kazakhstani Tenge (KZT)</option>
-                  <option value="KSh">KSh — Kenyan Shilling (KES)</option>
-                  <option value="KD">KD — Kuwaiti Dinar (KWD)</option>
-                  <option value="с">с — Kyrgyzstani Som (KGS)</option>
-                  <option value="₭">₭ — Lao Kip (LAK)</option>
-                  <option value="L£">L£ — Lebanese Pound (LBP)</option>
-                  <option value="LD">LD — Libyan Dinar (LYD)</option>
-                  <option value="RM">RM — Malaysian Ringgit (MYR)</option>
-                  <option value="Rs">Rs — Mauritian Rupee (MUR)</option>
-                  <option value="MX$">MX$ — Mexican Peso (MXN)</option>
-                  <option value="₮">₮ — Mongolian Tögrög (MNT)</option>
-                  <option value="MAD">MAD — Moroccan Dirham (MAD)</option>
-                  <option value="K">K — Myanmar Kyat (MMK)</option>
-                  <option value="N$">N$ — Namibian Dollar (NAD)</option>
-                  <option value="Rs">Rs — Nepalese Rupee (NPR)</option>
-                  <option value="NZ$">NZ$ — New Zealand Dollar (NZD)</option>
-                  <option value="₦">₦ — Nigerian Naira (NGN)</option>
-                  <option value="NOK">NOK — Norwegian Krone (NOK)</option>
-                  <option value="OMR">OMR — Omani Rial (OMR)</option>
-                  <option value="Rs">Rs — Pakistani Rupee (PKR)</option>
-                  <option value="₲">₲ — Paraguayan Guaraní (PYG)</option>
-                  <option value="S/">S/ — Peruvian Sol (PEN)</option>
-                  <option value="₱">₱ — Philippine Peso (PHP)</option>
-                  <option value="zł">zł — Polish Złoty (PLN)</option>
-                  <option value="QR">QR — Qatari Riyal (QAR)</option>
-                  <option value="lei">lei — Romanian Leu (RON)</option>
-                  <option value="₽">₽ — Russian Ruble (RUB)</option>
-                  <option value="SR">SR — Saudi Riyal (SAR)</option>
-                  <option value="din">din — Serbian Dinar (RSD)</option>
-                  <option value="R">R — South African Rand (ZAR)</option>
-                  <option value="Rs">Rs — Sri Lankan Rupee (LKR)</option>
-                  <option value="SEK">SEK — Swedish Krona (SEK)</option>
-                  <option value="Fr">Fr — Swiss Franc (CHF)</option>
-                  <option value="NT$">NT$ — New Taiwan Dollar (TWD)</option>
-                  <option value="TSh">TSh — Tanzanian Shilling (TZS)</option>
-                  <option value="TT$">TT$ — Trinidad &amp; Tobago Dollar (TTD)</option>
-                  <option value="DT">DT — Tunisian Dinar (TND)</option>
-                  <option value="₺">₺ — Turkish Lira (TRY)</option>
-                  <option value="₴">₴ — Ukrainian Hryvnia (UAH)</option>
-                  <option value="د.إ">د.إ — UAE Dirham (AED)</option>
-                  <option value="$U">$U — Uruguayan Peso (UYU)</option>
-                  <option value="сўм">сўм — Uzbekistani Sum (UZS)</option>
-                  <option value="Bs.S">Bs.S — Venezuelan Bolívar (VES)</option>
-                  <option value="ZK">ZK — Zambian Kwacha (ZMW)</option>
+        <div class="settings-workspace">
+          <!-- Left Sidebar Tabs -->
+          <div class="settings-sidebar">
+            <button class="settings-tab-btn active" data-tab="preferences">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="settings-tab-icon"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              Preferences
+            </button>
+            <button class="settings-tab-btn" data-tab="data-mgmt">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="settings-tab-icon"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              Data Management
+            </button>
+            <button class="settings-tab-btn" data-tab="custom-cats">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="settings-tab-icon"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              Custom Categories
+            </button>
+          </div>
+
+          <!-- Right Content Panel -->
+          <div class="settings-content">
+            <div class="settings-card active" id="preferences-pane">
+              <div class="settings-card-title">Preferences</div>
+              <form id="settingsForm">
+                <div class="form-group">
+                  <label class="form-label">Currency</label>
+                  <div class="currency-search-wrap">
+                    <input type="text" id="currencySearchInput" class="form-input" placeholder="Search currency…" autocomplete="off" />
+                    <div class="currency-dropdown" id="currencyDropdown"></div>
+                    <select id="settingsCurrency" style="display:none">
+                    <option value="$">$ — US Dollar (USD)</option>
+                    <option value="€">€ — Euro (EUR)</option>
+                    <option value="£">£ — British Pound (GBP)</option>
+                    <option value="¥">¥ — Japanese Yen (JPY)</option>
+                    <option value="₫">₫ — Vietnamese Dong (VND)</option>
+                    <option value="₩">₩ — South Korean Won (KRW)</option>
+                    <option value="₹">₹ — Indian Rupee (INR)</option>
+                    <option value="A$">A$ — Australian Dollar (AUD)</option>
+                    <option value="C$">C$ — Canadian Dollar (CAD)</option>
+                    <option value="S$">S$ — Singapore Dollar (SGD)</option>
+                    <option value="฿">฿ — Thai Baht (THB)</option>
+                    <option value="Af">Af — Afghan Afghani (AFN)</option>
+                    <option value="L">L — Albanian Lek (ALL)</option>
+                    <option value="دج">دج — Algerian Dinar (DZD)</option>
+                    <option value="Kz">Kz — Angolan Kwanza (AOA)</option>
+                    <option value="AR$">AR$ — Argentine Peso (ARS)</option>
+                    <option value="₼">₼ — Azerbaijani Manat (AZN)</option>
+                    <option value="BD">BD — Bahraini Dinar (BHD)</option>
+                    <option value="৳">৳ — Bangladeshi Taka (BDT)</option>
+                    <option value="Br">Br — Belarusian Ruble (BYN)</option>
+                    <option value="BZ$">BZ$ — Belize Dollar (BZD)</option>
+                    <option value="Bs.">Bs. — Bolivian Boliviano (BOB)</option>
+                    <option value="KM">KM — Bosnia-Herzegovina Mark (BAM)</option>
+                    <option value="P">P — Botswana Pula (BWP)</option>
+                    <option value="R$">R$ — Brazilian Real (BRL)</option>
+                    <option value="B$">B$ — Brunei Dollar (BND)</option>
+                    <option value="лв">лв — Bulgarian Lev (BGN)</option>
+                    <option value="៛">៛ — Cambodian Riel (KHR)</option>
+                    <option value="CL$">CL$ — Chilean Peso (CLP)</option>
+                    <option value="CN¥">CN¥ — Chinese Yuan (CNY)</option>
+                    <option value="CO$">CO$ — Colombian Peso (COP)</option>
+                    <option value="₡">₡ — Costa Rican Colón (CRC)</option>
+                    <option value="Kč">Kč — Czech Koruna (CZK)</option>
+                    <option value="kr">kr — Danish Krone (DKK)</option>
+                    <option value="RD$">RD$ — Dominican Peso (DOP)</option>
+                    <option value="E£">E£ — Egyptian Pound (EGP)</option>
+                    <option value="ETB">ETB — Ethiopian Birr (ETB)</option>
+                    <option value="FJ$">FJ$ — Fijian Dollar (FJD)</option>
+                    <option value="₾">₾ — Georgian Lari (GEL)</option>
+                    <option value="₵">₵ — Ghanaian Cedi (GHS)</option>
+                    <option value="Q">Q — Guatemalan Quetzal (GTQ)</option>
+                    <option value="HK$">HK$ — Hong Kong Dollar (HKD)</option>
+                    <option value="Ft">Ft — Hungarian Forint (HUF)</option>
+                    <option value="kr">kr — Icelandic Króna (ISK)</option>
+                    <option value="Rp">Rp — Indonesian Rupiah (IDR)</option>
+                    <option value="﷼">﷼ — Iranian Rial (IRR)</option>
+                    <option value="ع.د">ع.د — Iraqi Dinar (IQD)</option>
+                    <option value="₪">₪ — Israeli Shekel (ILS)</option>
+                    <option value="J$">J$ — Jamaican Dollar (JMD)</option>
+                    <option value="JD">JD — Jordanian Dinar (JOD)</option>
+                    <option value="₸">₸ — Kazakhstani Tenge (KZT)</option>
+                    <option value="KSh">KSh — Kenyan Shilling (KES)</option>
+                    <option value="KD">KD — Kuwaiti Dinar (KWD)</option>
+                    <option value="с">с — Kyrgyzstani Som (KGS)</option>
+                    <option value="₭">₭ — Lao Kip (LAK)</option>
+                    <option value="L£">L£ — Lebanese Pound (LBP)</option>
+                    <option value="LD">LD — Libyan Dinar (LYD)</option>
+                    <option value="RM">RM — Malaysian Ringgit (MYR)</option>
+                    <option value="Rs">Rs — Mauritian Rupee (MUR)</option>
+                    <option value="MX$">MX$ — Mexican Peso (MXN)</option>
+                    <option value="₮">₮ — Mongolian Tögrög (MNT)</option>
+                    <option value="MAD">MAD — Moroccan Dirham (MAD)</option>
+                    <option value="K">K — Myanmar Kyat (MMK)</option>
+                    <option value="N$">N$ — Namibian Dollar (NAD)</option>
+                    <option value="Rs">Rs — Nepalese Rupee (NPR)</option>
+                    <option value="NZ$">NZ$ — New Zealand Dollar (NZD)</option>
+                    <option value="₦">₦ — Nigerian Naira (NGN)</option>
+                    <option value="NOK">NOK — Norwegian Krone (NOK)</option>
+                    <option value="OMR">OMR — Omani Rial (OMR)</option>
+                    <option value="Rs">Rs — Pakistani Rupee (PKR)</option>
+                    <option value="₲">₲ — Paraguayan Guaraní (PYG)</option>
+                    <option value="S/">S/ — Peruvian Sol (PEN)</option>
+                    <option value="₱">₱ — Philippine Peso (PHP)</option>
+                    <option value="zł">zł — Polish Złoty (PLN)</option>
+                    <option value="QR">QR — Qatari Riyal (QAR)</option>
+                    <option value="lei">lei — Romanian Leu (RON)</option>
+                    <option value="₽">₽ — Russian Ruble (RUB)</option>
+                    <option value="SR">SR — Saudi Riyal (SAR)</option>
+                    <option value="din">din — Serbian Dinar (RSD)</option>
+                    <option value="R">R — South African Rand (ZAR)</option>
+                    <option value="Rs">Rs — Sri Lankan Rupee (LKR)</option>
+                    <option value="SEK">SEK — Swedish Krona (SEK)</option>
+                    <option value="Fr">Fr — Swiss Franc (CHF)</option>
+                    <option value="NT$">NT$ — New Taiwan Dollar (TWD)</option>
+                    <option value="TSh">TSh — Tanzanian Shilling (TZS)</option>
+                    <option value="TT$">TT$ — Trinidad &amp; Tobago Dollar (TTD)</option>
+                    <option value="DT">DT — Tunisian Dinar (TND)</option>
+                    <option value="₺">₺ — Turkish Lira (TRY)</option>
+                    <option value="₴">₴ — Ukrainian Hryvnia (UAH)</option>
+                    <option value="د.إ">د.إ — UAE Dirham (AED)</option>
+                    <option value="$U">$U — Uruguayan Peso (UYU)</option>
+                    <option value="сўм">сўм — Uzbekistani Sum (UZS)</option>
+                    <option value="Bs.S">Bs.S — Venezuelan Bolívar (VES)</option>
+                    <option value="ZK">ZK — Zambian Kwacha (ZMW)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Date Format</label>
+                  <select class="form-select" id="settingsDateFormat">
+                    <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                    <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                   </select>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Date Format</label>
-                <select class="form-select" id="settingsDateFormat">
-                  <option value="MM/DD/YYYY">MM/DD/YYYY</option>
-                  <option value="DD/MM/YYYY">DD/MM/YYYY</option>
-                </select>
-              </div>
-              <div style="margin-top:20px">
-                <button type="submit" class="btn-primary" style="width:100%">Save Changes</button>
-              </div>
-            </form>
-          </div>
+                <div style="margin-top:20px">
+                  <button type="submit" class="btn-primary" style="width:100%">Save Changes</button>
+                </div>
+              </form>
+            </div>
 
-          <div class="settings-card">
-            <div class="settings-card-title">Data Management</div>
-            <div class="data-btns">
-              <button class="btn-secondary" id="exportBtn">⬇ Export Data (JSON)</button>
-              <label class="btn-secondary" style="cursor:pointer">
-                ⬆ Import Data (JSON)
-                <input type="file" id="importFile" accept=".json" style="display:none" />
-              </label>
+            <div class="settings-card" id="data-mgmt-pane">
+              <div class="settings-card-title">Data Management</div>
+              <div class="data-btns">
+                <button class="btn-secondary" id="exportBtn">⬇ Export Data (JSON)</button>
+                <label class="btn-secondary" style="cursor:pointer">
+                  ⬆ Import Data (JSON)
+                  <input type="file" id="importFile" accept=".json" style="display:none" />
+                </label>
+              </div>
+              <div class="settings-section-label">Cloud Sync — Google Sheets</div>
+              <div class="data-btns">
+                <button class="btn-secondary" id="syncToSheetBtn">☁ Sync to Cloud</button>
+                <button class="btn-secondary" id="loadFromSheetBtn">⬇ Load from Cloud</button>
+              </div>
+              <div class="danger-divider">Danger Zone — irreversible action.</div>
+              <button class="btn-secondary btn-danger" id="clearBtn">✕ Clear All Data</button>
             </div>
-            <div class="settings-section-label">Cloud Sync — Google Sheets</div>
-            <div class="data-btns">
-              <button class="btn-secondary" id="syncToSheetBtn">☁ Sync to Cloud</button>
-              <button class="btn-secondary" id="loadFromSheetBtn">⬇ Load from Cloud</button>
-            </div>
-            <div class="danger-divider">Danger Zone — irreversible action.</div>
-            <button class="btn-secondary btn-danger" id="clearBtn">✕ Clear All Data</button>
-          </div>
 
-          <div class="settings-card cat-settings-card">
-            <div class="settings-card-title">Custom Categories</div>
-            <div class="cat-type-tabs" id="catTypeTabs">
-              <button class="cat-tab active" data-type="income">Income</button>
-              <button class="cat-tab" data-type="expense">Expense</button>
+            <div class="settings-card cat-settings-card" id="custom-cats-pane">
+              <div class="settings-card-title">Custom Categories</div>
+              <div class="cat-type-tabs" id="catTypeTabs">
+                <button class="cat-tab active" data-type="income">Income</button>
+                <button class="cat-tab" data-type="expense">Expense</button>
+              </div>
+              <div class="custom-cat-add">
+                <input type="text" id="newCatName" class="form-input" placeholder="Category name…" maxlength="30" />
+                <input type="color" id="newCatColor" class="cat-color-input" value="#4f46e5" />
+                <button class="btn-primary" id="addCatBtn">Add</button>
+              </div>
+              <div id="customCatList" class="custom-cat-list"></div>
             </div>
-            <div class="custom-cat-add">
-              <input type="text" id="newCatName" class="form-input" placeholder="Category name…" maxlength="30" />
-              <input type="color" id="newCatColor" class="cat-color-input" value="#4f46e5" />
-              <button class="btn-primary" id="addCatBtn">Add</button>
-            </div>
-            <div id="customCatList" class="custom-cat-list"></div>
           </div>
         </div>
       </section>
